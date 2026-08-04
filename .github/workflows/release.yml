@@ -45,6 +45,9 @@ jobs:
     name: Publish to PyPI
     runs-on: ubuntu-latest
     needs: test
+    permissions:
+      contents: read
+      id-token: write
     environment:
       name: pypi
       url: https://pypi.org/project/mcpbundles-mcp-connect
@@ -68,10 +71,16 @@ jobs:
         with:
           print-hash: true
 
-# PyPI trusted publishing setup:
-# 1. Create a PyPI project named `mcpbundles-mcp-connect`.
-# 2. Add a trusted publisher on PyPI for this GitHub repo with workflow
-#    `release.yml` and environment `pypi`.
-# 3. Create a GitHub environment named `pypi` (no secrets required for OIDC).
-# Fallback: set PYPI_API_TOKEN in the `pypi` environment if trusted publishing
-# is not yet configured.
+# PyPI trusted publishing setup (one-time):
+# 1. Create PyPI project `mcpbundles-mcp-connect` (or pending publisher before first upload).
+# 2. GitHub environment `pypi` on thinkchainai/mcpbundles-mcp-connect (already created).
+# 3. PyPI → Publishing → Add trusted publisher:
+#    Owner: thinkchainai | Repository: mcpbundles-mcp-connect
+#    Workflow: release.yml | Environment: pypi
+# 4. Tag v0.1.0 to trigger publish.
+#
+# IDE note: "Value 'pypi' is not valid" in the editor is a false positive until the
+# GitHub Actions extension refreshes repo environments; the name is valid once the
+# environment exists in repository Settings → Environments.
+
+
