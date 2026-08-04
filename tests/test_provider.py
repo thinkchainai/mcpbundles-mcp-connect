@@ -8,7 +8,7 @@ from fastmcp.server.auth.providers.jwt import JWTVerifier
 
 from mcpbundles_mcp_connect.fastmcp.provider import McpbundlesConnectProvider
 from mcpbundles_mcp_connect.middleware import McpbundlesHandshakeMiddleware
-from tests.conftest import (
+from .sample_data import (
     SAMPLE_OAUTH_METADATA,
     SAMPLE_PUBLIC_CONFIG,
     SAMPLE_PUBLIC_CONFIG_WITH_TELEMETRY,

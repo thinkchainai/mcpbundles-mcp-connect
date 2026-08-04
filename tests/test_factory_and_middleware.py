@@ -14,7 +14,7 @@ from fastmcp import FastMCP
 
 from mcpbundles_mcp_connect.factory import mcpbundles_fastmcp
 from mcpbundles_mcp_connect.middleware import McpbundlesHandshakeMiddleware
-from tests.conftest import SAMPLE_PUBLIC_CONFIG_WITH_TELEMETRY
+from .sample_data import SAMPLE_PUBLIC_CONFIG_WITH_TELEMETRY
 
 
 class DummyInitializeParams(SimpleNamespace):

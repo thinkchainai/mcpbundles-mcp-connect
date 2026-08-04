@@ -32,8 +32,11 @@ dev = [
 Homepage = "https://www.mcpbundles.com/docs/integrations/mcp-connect-auth"
 Repository = "https://github.com/thinkchainai/mcpbundles-mcp-connect"
 
-[tool.setuptools.packages.find]
-where = ["src"]
+[tool.setuptools]
+packages = ["mcpbundles_mcp_connect"]
+
+[tool.setuptools.package-dir]
+mcpbundles_mcp_connect = "src/mcpbundles_mcp_connect"
 
 [tool.pytest.ini_options]
 asyncio_mode = "auto"

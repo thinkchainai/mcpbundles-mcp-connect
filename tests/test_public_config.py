@@ -10,7 +10,7 @@ from mcpbundles_mcp_connect.public_config import (
     fetch_public_config,
     public_config_url,
 )
-from tests.conftest import SAMPLE_PUBLIC_CONFIG
+from .sample_data import SAMPLE_PUBLIC_CONFIG
 
 
 def test_fetch_public_config_success() -> None:
