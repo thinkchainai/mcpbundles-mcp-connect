@@ -10,7 +10,7 @@ from mcpbundles_mcp_connect.public_config import (
     fetch_public_config,
     public_config_url,
 )
-from .sample_data import SAMPLE_PUBLIC_CONFIG
+from .sample_data import SAMPLE_PUBLIC_CONFIG, SAMPLE_PUBLIC_CONFIG_API_PAYLOAD
 
 
 def test_fetch_public_config_success() -> None:
@@ -19,7 +19,7 @@ def test_fetch_public_config_success() -> None:
     def handler(request: httpx.Request) -> httpx.Response:
         assert request.method == "GET"
         assert str(request.url) == url
-        return httpx.Response(200, json=SAMPLE_PUBLIC_CONFIG)
+        return httpx.Response(200, json=SAMPLE_PUBLIC_CONFIG_API_PAYLOAD)
 
     with httpx.Client(transport=httpx.MockTransport(handler)) as client:
         config = fetch_public_config(
@@ -30,6 +30,7 @@ def test_fetch_public_config_success() -> None:
 
     assert config["issuer"] == SAMPLE_PUBLIC_CONFIG["issuer"]
     assert config["origin_resource"] == SAMPLE_PUBLIC_CONFIG["origin_resource"]
+    assert config["scopes_supported"] == ["read", "write"]
 
 
 def test_fetch_public_config_http_error() -> None:

@@ -119,9 +119,11 @@ def _validate_public_config(
         "origin_resource": origin_resource,
         "bundle_proxy_resource": bundle_proxy_resource,
     }
-    scopes = payload.get("scopes")
-    if isinstance(scopes, list):
-        config["scopes"] = [scope for scope in scopes if isinstance(scope, str)]
+    scopes_supported = payload.get("scopes_supported")
+    if isinstance(scopes_supported, list):
+        config["scopes_supported"] = [
+            scope for scope in scopes_supported if isinstance(scope, str)
+        ]
     telemetry_ingest_url = payload.get("telemetry_ingest_url")
     if isinstance(telemetry_ingest_url, str) and telemetry_ingest_url:
         config["telemetry_ingest_url"] = telemetry_ingest_url

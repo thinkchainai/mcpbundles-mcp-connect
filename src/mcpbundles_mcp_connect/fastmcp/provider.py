@@ -98,7 +98,7 @@ class McpbundlesConnectProvider(RemoteAuthProvider):
         tenant_as = AnyHttpUrl(tenant_base_url(self.public_config_base_url, listing_slug))
         advertised_scopes = scopes_supported
         if advertised_scopes is None:
-            advertised_scopes = self.public_config.get("scopes")
+            advertised_scopes = self.public_config.get("scopes_supported")
 
         super().__init__(
             token_verifier=token_verifier,

@@ -15,6 +15,7 @@ classifiers = [
     "Development Status :: 3 - Alpha",
     "Intended Audience :: Developers",
     "Programming Language :: Python :: 3",
+    "Typing :: Typed",
 ]
 
 dependencies = [
@@ -32,11 +33,11 @@ dev = [
 Homepage = "https://www.mcpbundles.com/docs/integrations/mcp-connect-auth"
 Repository = "https://github.com/thinkchainai/mcpbundles-mcp-connect"
 
-[tool.setuptools]
-packages = ["mcpbundles_mcp_connect"]
+[tool.setuptools.packages.find]
+where = ["src"]
 
-[tool.setuptools.package-dir]
-mcpbundles_mcp_connect = "src/mcpbundles_mcp_connect"
+[tool.setuptools.package-data]
+mcpbundles_mcp_connect = ["py.typed"]
 
 [tool.pytest.ini_options]
 asyncio_mode = "auto"

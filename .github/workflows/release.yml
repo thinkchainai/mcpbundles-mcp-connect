@@ -1,0 +1,77 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: uv sync --dev
+
+      - name: Run tests
+        run: uv run pytest
+
+      - name: Build wheel
+        run: uv build
+
+      - name: Install wheel and smoke import
+        run: |
+          pip install dist/*.whl
+          python -c "from mcpbundles_mcp_connect import McpbundlesConnectProvider, mcpbundles_fastmcp"
+
+  publish:
+    name: Publish to PyPI
+    runs-on: ubuntu-latest
+    needs: test
+    environment:
+      name: pypi
+      url: https://pypi.org/project/mcpbundles-mcp-connect
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Build distributions
+        run: uv build
+
+      - name: Publish to PyPI
+        uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          print-hash: true
+
+# PyPI trusted publishing setup:
+# 1. Create a PyPI project named `mcpbundles-mcp-connect`.
+# 2. Add a trusted publisher on PyPI for this GitHub repo with workflow
+#    `release.yml` and environment `pypi`.
+# 3. Create a GitHub environment named `pypi` (no secrets required for OIDC).
+# Fallback: set PYPI_API_TOKEN in the `pypi` environment if trusted publishing
+# is not yet configured.

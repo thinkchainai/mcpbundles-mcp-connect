@@ -73,3 +73,25 @@ async def test_complete_federation_requires_secret() -> None:
             state="state-123",
             subject="user-456",
         )
+
+
+@pytest.mark.asyncio
+async def test_complete_federation_requires_state() -> None:
+    with pytest.raises(ValueError, match="state"):
+        await complete_federation(
+            listing_slug="demo",
+            federation_secret="test-secret",
+            state="",
+            subject="user-456",
+        )
+
+
+@pytest.mark.asyncio
+async def test_complete_federation_requires_subject() -> None:
+    with pytest.raises(ValueError, match="subject"):
+        await complete_federation(
+            listing_slug="demo",
+            federation_secret="test-secret",
+            state="state-123",
+            subject="",
+        )

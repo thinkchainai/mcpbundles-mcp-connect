@@ -4,9 +4,16 @@ from __future__ import annotations
 
 from mcpbundles_mcp_connect.types import PublicConfig
 
+SAMPLE_PUBLIC_CONFIG_API_PAYLOAD: dict[str, object] = {
+    "issuer": "https://api.example.com/connect-auth/tenants/demo/",
+    "scopes_supported": ["read", "write"],
+    "origin_resource": "https://mcp.example.com/mcp",
+    "bundle_proxy_resource": "https://mcp.mcpbundles.com/bundle/demo",
+}
+
 SAMPLE_PUBLIC_CONFIG: PublicConfig = {
-    "issuer": "https://api.example.com/connect-auth/tenants/demo",
-    "scopes": ["mcp:tools"],
+    "issuer": "https://api.example.com/connect-auth/tenants/demo/",
+    "scopes_supported": ["read", "write"],
     "origin_resource": "https://mcp.example.com/mcp",
     "bundle_proxy_resource": "https://mcp.mcpbundles.com/bundle/demo",
 }

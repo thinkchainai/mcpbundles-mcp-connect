@@ -9,7 +9,7 @@ class PublicConfig(TypedDict, total=False):
     """Tenant public-config response from MCPBundles Connect Auth."""
 
     issuer: str
-    scopes: list[str]
+    scopes_supported: list[str]
     origin_resource: str
     bundle_proxy_resource: str
     telemetry_ingest_url: str

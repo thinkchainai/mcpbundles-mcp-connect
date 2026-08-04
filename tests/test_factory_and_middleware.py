@@ -67,7 +67,52 @@ async def test_handshake_middleware_posts_ingest_without_blocking() -> None:
         await asyncio.wait_for(done.wait(), timeout=1.0)
 
     assert posted["url"] == SAMPLE_PUBLIC_CONFIG_WITH_TELEMETRY["telemetry_ingest_url"]
-    assert "Cursor" in posted["json"]
+    body = json.loads(posted["json"])
+    assert body["client_name"] == "Cursor"
+    assert body["protocol_negotiated"] == "2025-03-26"
+
+
+@pytest.mark.asyncio
+async def test_handshake_middleware_truncates_client_fields() -> None:
+    posted: dict[str, Any] = {}
+    done = asyncio.Event()
+
+    def handler(request: httpx.Request) -> httpx.Response:
+        posted["json"] = request.content.decode("utf-8")
+        done.set()
+        return httpx.Response(204)
+
+    middleware = McpbundlesHandshakeMiddleware(
+        ingest_url=SAMPLE_PUBLIC_CONFIG_WITH_TELEMETRY["telemetry_ingest_url"],
+        listing_slug="demo",
+    )
+
+    async def call_next(context):
+        return SimpleNamespace(protocol_version="2025-03-26")
+
+    long_name = "x" * 300
+    request = DummyInitializeRequest(
+        params=DummyInitializeParams(
+            client_info=SimpleNamespace(name=long_name, version="1.0.0"),
+            protocol_version="2025-03-26",
+        )
+    )
+    context = SimpleNamespace(message=request)
+
+    class PatchedAsyncClient(httpx.AsyncClient):
+        def __init__(self, *args, **kwargs):
+            kwargs["transport"] = httpx.MockTransport(handler)
+            super().__init__(*args, **kwargs)
+
+    with patch(
+        "mcpbundles_mcp_connect.middleware.httpx.AsyncClient",
+        PatchedAsyncClient,
+    ):
+        await middleware.on_initialize(context, call_next)  # type: ignore[arg-type]
+        await asyncio.wait_for(done.wait(), timeout=1.0)
+
+    body = json.loads(posted["json"])
+    assert len(body["client_name"]) == 200
 
 
 def test_mcpbundles_fastmcp_registers_auth_and_middleware() -> None:
