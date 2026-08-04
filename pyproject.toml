@@ -1,0 +1,30 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "mcpbundles-mcp-connect"
+version = "0.0.0"
+description = "MCP Connect Auth client library for Python (FastMCP, federation, origin telemetry)"
+readme = "README.md"
+requires-python = ">=3.10"
+license = "MIT"
+authors = [{ name = "MCPBundles", email = "support@mcpbundles.com" }]
+keywords = ["mcp", "oauth", "fastmcp", "mcpbundles"]
+classifiers = [
+    "Development Status :: 2 - Pre-Alpha",
+    "Intended Audience :: Developers",
+    "Programming Language :: Python :: 3",
+]
+
+dependencies = [
+    "fastmcp>=3.0.0",
+    "httpx>=0.27",
+]
+
+[project.urls]
+Homepage = "https://www.mcpbundles.com/docs/integrations/mcp-connect-auth"
+Repository = "https://github.com/thinkchainai/mcpbundles-mcp-connect"
+
+[tool.setuptools.packages.find]
+where = ["src"]
