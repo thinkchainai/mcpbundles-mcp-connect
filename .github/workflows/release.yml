@@ -28,7 +28,7 @@ jobs:
           python-version: "3.11"
 
       - name: Install dependencies
-        run: uv sync --dev
+        run: uv sync --extra dev
 
       - name: Run tests
         run: uv run pytest
@@ -71,16 +71,13 @@ jobs:
         with:
           print-hash: true
 
-# PyPI trusted publishing setup (one-time):
-# 1. Create PyPI project `mcpbundles-mcp-connect` (or pending publisher before first upload).
-# 2. GitHub environment `pypi` on thinkchainai/mcpbundles-mcp-connect (already created).
+# PyPI trusted publishing setup (one-time — do BEFORE tagging v0.1.0):
+# 1. Register PyPI project `mcpbundles-mcp-connect` (first upload creates it, OR add
+#    a "pending publisher" at https://pypi.org/manage/account/publishing/ before tagging).
+# 2. GitHub environment `pypi` on thinkchainai/mcpbundles-mcp-connect (created).
 # 3. PyPI → Publishing → Add trusted publisher:
 #    Owner: thinkchainai | Repository: mcpbundles-mcp-connect
 #    Workflow: release.yml | Environment: pypi
-# 4. Tag v0.1.0 to trigger publish.
-#
-# IDE note: "Value 'pypi' is not valid" in the editor is a false positive until the
-# GitHub Actions extension refreshes repo environments; the name is valid once the
-# environment exists in repository Settings → Environments.
+# 4. Only then tag v0.1.0 — publish will fail until steps 1–3 are done.
 
 
