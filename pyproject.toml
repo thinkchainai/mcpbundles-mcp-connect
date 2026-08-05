@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "mcpbundles-mcp-connect"
-version = "0.1.0"
+version = "0.1.2"
 description = "MCP Connect Auth client library for Python (FastMCP, federation, origin telemetry)"
 readme = "README.md"
 requires-python = ">=3.10"
