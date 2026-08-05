@@ -1,7 +1,10 @@
 """MCP Connect Auth client library for Python."""
 
 from mcpbundles_mcp_connect.factory import mcpbundles_fastmcp
-from mcpbundles_mcp_connect.fastmcp import McpbundlesConnectProvider
+from mcpbundles_mcp_connect.fastmcp import (
+    McpbundlesConnectProvider,
+    connect_auth_callback_identity,
+)
 from mcpbundles_mcp_connect.federation import (
     FederationCompleteError,
     complete_federation,
@@ -22,6 +25,7 @@ __all__ = [
     "McpbundlesHandshakeMiddleware",
     "PublicConfigFetchError",
     "complete_federation",
+    "connect_auth_callback_identity",
     "fetch_public_config",
     "mcpbundles_fastmcp",
 ]

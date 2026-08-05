@@ -4,8 +4,8 @@ from __future__ import annotations
 
 import httpx
 import pytest
-from fastmcp.server.auth.providers.jwt import JWTVerifier
 
+from mcpbundles_mcp_connect.fastmcp.jwt_verifier import McpbundlesJWTVerifier
 from mcpbundles_mcp_connect.fastmcp.provider import McpbundlesConnectProvider
 from mcpbundles_mcp_connect.middleware import McpbundlesHandshakeMiddleware
 from .sample_data import (
@@ -28,7 +28,7 @@ def _provider(**kwargs) -> McpbundlesConnectProvider:
 def test_provider_configures_jwt_verifier() -> None:
     provider = _provider()
 
-    assert isinstance(provider.token_verifier, JWTVerifier)
+    assert isinstance(provider.token_verifier, McpbundlesJWTVerifier)
     assert provider.token_verifier.issuer == SAMPLE_PUBLIC_CONFIG["issuer"]
     assert provider.token_verifier.algorithm == "ES256"
     assert provider.token_verifier.audience == [

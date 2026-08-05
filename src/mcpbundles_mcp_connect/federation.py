@@ -45,6 +45,7 @@ async def complete_federation(
     subject: str,
     organization_id: str | None = None,
     email: str | None = None,
+    roles: list[str] | None = None,
     api_base_url: str = DEFAULT_PUBLIC_CONFIG_BASE_URL,
     timeout: float = DEFAULT_HTTP_TIMEOUT,
     client: httpx.AsyncClient | None = None,
@@ -63,6 +64,8 @@ async def complete_federation(
         body["organization_id"] = organization_id
     if email is not None:
         body["email"] = email
+    if roles is not None:
+        body["roles"] = roles
 
     headers = {"Authorization": f"Bearer {federation_secret}"}
     owns_client = client is None

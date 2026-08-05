@@ -10,10 +10,11 @@ from starlette.responses import JSONResponse
 from starlette.routing import Route
 
 from fastmcp.server.auth import RemoteAuthProvider, TokenVerifier
-from fastmcp.server.auth.providers.jwt import JWTVerifier
 from fastmcp.server.middleware import Middleware
 from fastmcp.utilities.auth import parse_scopes
 from fastmcp.utilities.logging import get_logger
+
+from mcpbundles_mcp_connect.fastmcp.jwt_verifier import McpbundlesJWTVerifier
 
 from mcpbundles_mcp_connect.middleware import McpbundlesHandshakeMiddleware
 from mcpbundles_mcp_connect.public_config import (
@@ -87,7 +88,7 @@ class McpbundlesConnectProvider(RemoteAuthProvider):
         ]
 
         if token_verifier is None:
-            token_verifier = JWTVerifier(
+            token_verifier = McpbundlesJWTVerifier(
                 jwks_uri=jwks_url(self.public_config_base_url, listing_slug),
                 issuer=issuer,
                 algorithm="ES256",
