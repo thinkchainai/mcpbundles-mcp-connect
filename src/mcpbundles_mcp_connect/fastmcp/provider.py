@@ -39,7 +39,8 @@ class McpbundlesConnectProvider(RemoteAuthProvider):
 
     IMPORTANT SETUP REQUIREMENTS:
 
-    1. Publish your MCP server on MCPBundles with MCP Connect Auth enabled.
+    1. Create or claim an MCP listing on MCPBundles and enable MCP Connect Auth
+       in maintainer settings (public directory publish is optional).
     2. Set your federation sign-in URL and save the federation secret on your
        web app (not in this MCP server).
     3. Configure ``MCPBUNDLES_LISTING_SLUG`` and point clients at your public
